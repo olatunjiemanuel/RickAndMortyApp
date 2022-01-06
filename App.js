@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 
 import axios from 'axios';
 import ListItem from './components/ListItem';
+
+//colors imports
+import colors from './Assets/Colors';
 
 const fetchAPI = async () => {
   try {
@@ -27,12 +30,10 @@ const App = () => {
     workAPI();
   }, []);
 
+  const onPressHandler = () => {};
+
   return (
-    <View
-      style={{
-        marginTop: 40,
-        alignItems: 'center',
-      }}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={data}
         keyExtractor={item => item.id}
@@ -43,6 +44,10 @@ const App = () => {
             name={item.name}
             specie={item.species}
             gender={item.gender}
+            status={item.status}
+            onPress={onPressHandler}
+            origin={item.origin.name}
+            episodes={item.episode.length}
           />
         )}
       />
@@ -53,10 +58,19 @@ const App = () => {
       <Text>{data[0].gender}</Text>
       <Text>{data[0].origin.name}</Text>
       <Text>{data[0].origin.url}</Text> */}
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default App;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    backgroundColor: colors.gray,
+  },
+  statusIndicator: {
+    width: 20,
+    height: 20,
+  },
+});
