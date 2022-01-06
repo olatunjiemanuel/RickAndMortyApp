@@ -48,6 +48,9 @@ const App = () => {
             onPress={onPressHandler}
             origin={item.origin.name}
             episodes={item.episode.length}
+            url={item.url}
+            created={item.created}
+            type={item.type}
           />
         )}
       />

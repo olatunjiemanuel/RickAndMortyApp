@@ -13,7 +13,18 @@ import {
 import colors from '../Assets/Colors';
 
 const ListItem = props => {
-  const {image, name, specie, gender, status, origin, episodes} = props;
+  const {
+    image,
+    name,
+    specie,
+    gender,
+    status,
+    origin,
+    episodes,
+    url,
+    created,
+    type,
+  } = props;
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -82,6 +93,22 @@ const ListItem = props => {
             <View style={styles.summaryContainer}>
               <Text style={styles.modalText}>Origin</Text>
               <Text style={styles.modalText}>{origin}</Text>
+            </View>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.modalText}>Link</Text>
+              <Text style={styles.modalText}>{url}</Text>
+            </View>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.modalText}>Created</Text>
+              <Text style={styles.modalText}>{created}</Text>
+            </View>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.modalText}>Episodes</Text>
+              <Text style={styles.text}>{episodes}</Text>
+            </View>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.modalText}>Type</Text>
+              <Text style={styles.text}>{type}</Text>
             </View>
           </View>
         </SafeAreaView>
