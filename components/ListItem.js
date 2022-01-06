@@ -12,10 +12,6 @@ import {
 //colors import
 import colors from '../Assets/Colors';
 
-// const statusColor = status => {
-//   item.status === alive ? colors.alive : colors.dead;
-// };
-
 const ListItem = props => {
   const {image, name, specie, gender, status, origin, episodes} = props;
 
@@ -25,14 +21,18 @@ const ListItem = props => {
     setModalOpen(true);
   };
 
+  const statusColor = [styles.statusIndicator];
+
+  if (status == 'Dead') {
+    statusColor.push(styles.dead);
+  } else if (status == 'unknown') {
+    statusColor.push(styles.unknown);
+  }
+
   return (
     <TouchableOpacity onPress={onPressHandler} style={styles.listContainer}>
       <View style={styles.statusContainer}>
-        <View
-          style={[
-            styles.statusIndicator,
-            //{backgroundColor: statusColor},
-          ]}></View>
+        <View style={statusColor} />
         <Text style={styles.text}>{status}</Text>
       </View>
       <View style={styles.imageContainer}>
@@ -105,6 +105,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: colors.alive,
     marginRight: 5,
+  },
+  dead: {
+    backgroundColor: colors.dead,
+  },
+  unknown: {
+    backgroundColor: colors.unknown,
   },
   statusContainer: {
     flexDirection: 'row',
