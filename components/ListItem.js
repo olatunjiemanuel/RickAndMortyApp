@@ -23,11 +23,13 @@ const ListItem = props => {
 
   const statusColor = [styles.statusIndicator];
 
-  if (status == 'Dead') {
-    statusColor.push(styles.dead);
-  } else if (status == 'unknown') {
-    statusColor.push(styles.unknown);
-  }
+  status == 'Dead' ? statusColor.push(styles.dead) : null;
+  status == 'unknown' ? statusColor.push(styles.unknown) : null;
+  // if (status == 'Dead') {
+  //   statusColor.push(styles.dead);
+  // } else if (status == 'unknown') {
+  //   statusColor.push(styles.unknown);
+  // }
 
   return (
     <TouchableOpacity onPress={onPressHandler} style={styles.listContainer}>
@@ -57,18 +59,31 @@ const ListItem = props => {
           <View>
             <Image style={styles.modalImage} source={image} />
           </View>
-          <View>
-            <View
-              style={[
-                styles.statusIndicator,
-                //{backgroundColor: statusColor},
-              ]}></View>
-            <Text style={styles.modalText}>{status}</Text>
+          <View style={styles.modalProfileTextWrapper}>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.modalText}>Status</Text>
+              <View style={styles.modalstatusContainer}>
+                <View style={statusColor} />
+                <Text style={styles.modalText}>{status}</Text>
+              </View>
+            </View>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.modalText}>Name</Text>
+              <Text style={styles.modalText}>{name}</Text>
+            </View>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.modalText}>Gender</Text>
+              <Text style={styles.modalText}>{gender}</Text>
+            </View>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.modalText}>Specie</Text>
+              <Text style={styles.modalText}>{specie}</Text>
+            </View>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.modalText}>Origin</Text>
+              <Text style={styles.modalText}>{origin}</Text>
+            </View>
           </View>
-          <Text style={styles.modalText}>{name}</Text>
-          <Text style={styles.modalText}>{gender}</Text>
-          <Text style={styles.modalText}>{specie}</Text>
-          <Text style={styles.modalText}>{origin}</Text>
         </SafeAreaView>
       </Modal>
     </TouchableOpacity>
@@ -137,10 +152,27 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   modalImage: {
-    width: 300,
-    height: 300,
+    width: 200,
+    height: 200,
     borderRadius: 50,
     alignSelf: 'center',
     marginTop: 10,
+  },
+  modalstatusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  modalProfileTextWrapper: {
+    marginTop: 20,
+    marginHorizontal: 10,
+  },
+  summaryContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: colors.gray,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
   },
 });
