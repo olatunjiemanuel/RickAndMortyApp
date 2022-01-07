@@ -17,7 +17,6 @@ export default NavButton;
 
 const styles = StyleSheet.create({
   navButtons: {
-    marginTop: 40,
     backgroundColor: 'white',
     width: 100,
     height: 100,

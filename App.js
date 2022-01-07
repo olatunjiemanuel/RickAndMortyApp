@@ -10,22 +10,31 @@ import colors from './Assets/Colors';
 // component imports
 import NavButton from './components/NavButton';
 
-const fetchAPI = async () => {
-  let pageNumber = 20;
-  try {
-    const response = await axios.get(
-      `https://rickandmortyapi.com/api/character/?page=${pageNumber}`,
-      //'https://rickandmortyapi.com/api/character/?page=1',
-    );
-    const Characterdata = response.data;
-    return Characterdata;
-  } catch (error) {
-    console.error(error.message);
-  }
-};
-
 const App = () => {
   const [data, setData] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const onPressNext = () => {
+    pageNumber <= 41 ? setPageNumber(pageNumber + 1) : setPageNumber(1);
+    console.log(pageNumber);
+  };
+  const onPressPrev = () => {
+    pageNumber > 1 ? setPageNumber(pageNumber - 1) : null;
+    console.log(pageNumber);
+  };
+
+  const fetchAPI = async () => {
+    try {
+      const response = await axios.get(
+        `https://rickandmortyapi.com/api/character/?page=${pageNumber}`,
+        //'https://rickandmortyapi.com/api/character/?page=1',
+      );
+      const Characterdata = response.data;
+      return Characterdata;
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   useEffect(() => {
     const workAPI = async () => {
@@ -33,9 +42,7 @@ const App = () => {
       setData(rickData.results);
     };
     workAPI();
-  }, []);
-
-  const onPressHandler = () => {};
+  }, [pageNumber]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -51,7 +58,6 @@ const App = () => {
               specie={item.species}
               gender={item.gender}
               status={item.status}
-              onPress={onPressHandler}
               origin={item.origin.name}
               episodes={item.episode.length}
               url={item.url}
@@ -61,13 +67,19 @@ const App = () => {
           )}
         />
       </View>
-      <View style={styles.navButtonsWrapper}>
-        <View style={styles.prevButton}>
-          <NavButton buttonText="Previous" bgColor={colors.darkRed} />
-        </View>
-        <View style={styles.nextButton}>
-          <NavButton buttonText="Next" bgColor={colors.green} />
-        </View>
+      <View style={styles.prevButton}>
+        <NavButton
+          buttonText="Previous"
+          bgColor={colors.darkRed}
+          onPress={onPressPrev}
+        />
+      </View>
+      <View style={styles.nextButton}>
+        <NavButton
+          buttonText="Next"
+          bgColor={colors.green}
+          onPress={onPressNext}
+        />
       </View>
       {/* <Text>{data[0].id}</Text>
       <Image style={{width: 200, height: 200}} source={{uri: data[0].image}} />
@@ -94,15 +106,19 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
-  navButtonsWrapper: {
-    marginTop: 600,
+  prevButton: {
+    marginTop: 650,
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginHorizontal: 10,
   },
-  prevButton: {},
   nextButton: {
-    marginLeft: 180,
+    marginTop: 650,
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginHorizontal: 10,
+    marginLeft: 280,
   },
 });
