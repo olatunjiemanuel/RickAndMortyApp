@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View, Text} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 
 import axios from 'axios';
 import ListItem from './components/ListItem';
