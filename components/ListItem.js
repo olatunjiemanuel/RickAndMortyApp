@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
   modalProfileTextWrapper: {
     marginTop: 20,
     marginHorizontal: 10,
+    marginBottom: 100,
   },
   summaryContainer: {
     flexDirection: 'row',
