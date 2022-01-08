@@ -3,9 +3,10 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../Assets/Colors';
 
 const NavButton = props => {
-  const {buttonText, bgColor, onPress} = props;
+  const {buttonText, bgColor, onPress, disabled} = props;
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={onPress}
       style={[styles.navButtons, {backgroundColor: bgColor}]}>
       <Text style={styles.buttonText}>{buttonText}</Text>

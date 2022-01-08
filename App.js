@@ -72,6 +72,7 @@ const App = () => {
           buttonText="Previous"
           bgColor={colors.darkRed}
           onPress={onPressPrev}
+          disabled={false}
         />
       </View>
       <View style={styles.nextButton}>
