@@ -76,7 +76,7 @@ const App = () => {
       <View style={styles.prevButton}>
         <NavButton
           buttonText="Previous"
-          bgColor={disabled ? colors.gray : colors.darkRed}
+          bgColor={disabled ? colors.black : colors.darkRed}
           onPress={onPressPrev}
           disabled={disabled}
         />
