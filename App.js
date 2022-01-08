@@ -13,6 +13,7 @@ import NavButton from './components/NavButton';
 const App = () => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
+  const [disabled, setDisabled] = useState(false);
 
   const onPressNext = () => {
     pageNumber <= 41 ? setPageNumber(pageNumber + 1) : setPageNumber(1);
@@ -42,6 +43,11 @@ const App = () => {
       setData(rickData.results);
     };
     workAPI();
+    // check if this is making app to overheat and use resources
+    const buttonDisable = () => {
+      pageNumber == 1 ? setDisabled(true) : setDisabled(false);
+    };
+    buttonDisable();
   }, [pageNumber]);
 
   return (
@@ -70,9 +76,9 @@ const App = () => {
       <View style={styles.prevButton}>
         <NavButton
           buttonText="Previous"
-          bgColor={colors.darkRed}
+          bgColor={disabled ? colors.gray : colors.darkRed}
           onPress={onPressPrev}
-          disabled={false}
+          disabled={disabled}
         />
       </View>
       <View style={styles.nextButton}>
