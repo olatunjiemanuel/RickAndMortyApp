@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 
 import axios from 'axios';
 import ListItem from './components/ListItem';
@@ -14,6 +20,7 @@ const App = () => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [disabled, setDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onPressNext = () => {
     pageNumber <= 41 ? setPageNumber(pageNumber + 1) : setPageNumber(1);
@@ -26,11 +33,13 @@ const App = () => {
 
   const fetchAPI = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get(
         `https://rickandmortyapi.com/api/character/?page=${pageNumber}`,
         //'https://rickandmortyapi.com/api/character/?page=1',
       );
       const Characterdata = response.data;
+      setIsLoading(false);
       return Characterdata;
     } catch (error) {
       console.error(error.message);
@@ -50,6 +59,14 @@ const App = () => {
     buttonDisable();
   }, [pageNumber]);
 
+  const renderLoader = () => {
+    return isLoading ? (
+      <View>
+        <ActivityIndicator size="large" color={colors.black} />
+      </View>
+    ) : null;
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flatListWrapper}>
@@ -57,6 +74,7 @@ const App = () => {
           data={data}
           keyExtractor={item => item.id}
           numColumns={2}
+          ListHeaderComponent={renderLoader}
           renderItem={({item}) => (
             <ListItem
               image={{uri: item.image}}
@@ -73,6 +91,7 @@ const App = () => {
           )}
         />
       </View>
+
       <View style={styles.prevButton}>
         <NavButton
           buttonText="Previous"
@@ -88,6 +107,7 @@ const App = () => {
           onPress={onPressNext}
         />
       </View>
+
       {/* <Text>{data[0].id}</Text>
       <Image style={{width: 200, height: 200}} source={{uri: data[0].image}} />
       <Text>{data[0].species}</Text>
@@ -127,5 +147,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     marginHorizontal: 10,
     marginLeft: 280,
+  },
+  ActivityIndicator: {
+    position: 'absolute',
+    marginTop: 300,
+    marginLeft: 180,
   },
 });
