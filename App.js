@@ -5,7 +5,6 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  Text,
 } from 'react-native';
 
 import axios from 'axios';
@@ -15,7 +14,6 @@ import ListItem from './components/ListItem';
 import colors from './Assets/Colors';
 
 // component imports
-import NavButton from './components/NavButton';
 import BottomNavBar from './components/BottomNavBar';
 
 const App = () => {
