@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 
 import axios from 'axios';
@@ -15,6 +16,7 @@ import colors from './Assets/Colors';
 
 // component imports
 import NavButton from './components/NavButton';
+import BottomNavBar from './components/BottomNavBar';
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -92,19 +94,12 @@ const App = () => {
         />
       </View>
 
-      <View style={styles.prevButton}>
-        <NavButton
-          buttonText="Previous"
-          bgColor={disabled ? colors.black : colors.darkRed}
-          onPress={onPressPrev}
+      <View style={styles.BottomNavBarContainer}>
+        <BottomNavBar
+          pageNumber={pageNumber}
+          onPressBack={onPressPrev}
+          onPressNext={onPressNext}
           disabled={disabled}
-        />
-      </View>
-      <View style={styles.nextButton}>
-        <NavButton
-          buttonText="Next"
-          bgColor={colors.green}
-          onPress={onPressNext}
         />
       </View>
 
@@ -133,20 +128,10 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
-  prevButton: {
-    marginTop: 650,
+  BottomNavBarContainer: {
+    marginTop: 780,
     position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginHorizontal: 10,
-  },
-  nextButton: {
-    marginTop: 650,
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginHorizontal: 10,
-    marginLeft: 280,
+    marginLeft: 155,
   },
   ActivityIndicator: {
     position: 'absolute',
