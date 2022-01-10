@@ -15,6 +15,7 @@ import colors from './Assets/Colors';
 
 // component imports
 import BottomNavBar from './components/BottomNavBar';
+import SearchBarComponent from './components/SearchBarComponent';
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -69,6 +70,9 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.SearchBarComponent}>
+        <SearchBarComponent />
+      </View>
       <View style={styles.flatListWrapper}>
         <FlatList
           data={data}
@@ -135,5 +139,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginTop: 300,
     marginLeft: 180,
+  },
+  SearchBarComponent: {
+    marginBottom: 10,
+    marginLeft: 75,
   },
 });
