@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 
 //SVG imports
@@ -8,7 +8,9 @@ import SearchSVG from './SearchSVG';
 import colors from '../Assets/Colors';
 
 const SearchBarComponent = props => {
-  const {value} = props;
+  const {searchText} = props;
+  const [searchText, setSearchText] = useState('');
+
   return (
     <View style={styles.container}>
       <View style={styles.searchSVG}>
@@ -18,7 +20,10 @@ const SearchBarComponent = props => {
         <TextInput
           placeholder="Type something to start searching"
           style={styles.TextInput}
-          value={value}
+          value={searchText}
+          onChangeText={value => {
+            setSearchText(value);
+          }}
         />
       </View>
     </View>

@@ -5,6 +5,9 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  TextInput,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 
 import axios from 'axios';
@@ -15,13 +18,16 @@ import colors from './Assets/Colors';
 
 // component imports
 import BottomNavBar from './components/BottomNavBar';
-import SearchBarComponent from './components/SearchBarComponent';
+import SearchSVG from './components/SearchSVG';
+//import SearchBarComponent from './components/SearchBarComponent';
 
 const App = () => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const [name, setName] = useState('');
 
   const onPressNext = () => {
     pageNumber <= 41 ? setPageNumber(pageNumber + 1) : setPageNumber(1);
@@ -36,7 +42,7 @@ const App = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `https://rickandmortyapi.com/api/character/?page=${pageNumber}`,
+        `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${name}&status=Alive&species=&type=&gender=`,
         //'https://rickandmortyapi.com/api/character/?page=1',
       );
       const Characterdata = response.data;
@@ -45,6 +51,19 @@ const App = () => {
     } catch (error) {
       console.error(error.message);
     }
+  };
+
+  const onChangeText = value => {
+    setSearchText(value);
+    console.log(searchText);
+    newData = data.filter(function (text) {
+      return searchText.includes('rick');
+    });
+    console.log(newData);
+  };
+
+  const onPressRick = () => {
+    setName('Rick');
   };
 
   useEffect(() => {
@@ -58,7 +77,7 @@ const App = () => {
       pageNumber == 1 ? setDisabled(true) : setDisabled(false);
     };
     buttonDisable();
-  }, [pageNumber]);
+  }, [pageNumber, name]);
 
   const renderLoader = () => {
     return (
@@ -73,8 +92,23 @@ const App = () => {
   ) : (
     <SafeAreaView style={styles.container}>
       <View style={styles.SearchBarComponent}>
-        <SearchBarComponent />
+        <View style={styles.Searchcontainer}>
+          <View style={styles.searchSVG}>
+            <SearchSVG />
+          </View>
+          <View>
+            <TextInput
+              placeholder="Type something to start searching"
+              style={styles.TextInput}
+              value={searchText}
+              onChangeText={onChangeText}
+            />
+          </View>
+        </View>
       </View>
+      <TouchableOpacity onPress={onPressRick}>
+        <Text>Rick</Text>
+      </TouchableOpacity>
       <View style={styles.flatListWrapper}>
         <FlatList
           data={data}
@@ -150,5 +184,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.gray,
+  },
+  Searchcontainer: {
+    backgroundColor: colors.white,
+    flexDirection: 'row',
+    width: 300,
+    height: 40,
+    alignItems: 'center',
+    borderRadius: 20,
+  },
+  TextInput: {
+    width: 250,
+    marginLeft: 5,
+    height: 40,
+  },
+  searchSVG: {
+    marginLeft: 20,
   },
 });
