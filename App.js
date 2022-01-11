@@ -61,14 +61,16 @@ const App = () => {
   }, [pageNumber]);
 
   const renderLoader = () => {
-    return isLoading ? (
-      <View>
+    return (
+      <View style={styles.renderLoader}>
         <ActivityIndicator size="large" color={colors.black} />
       </View>
-    ) : null;
+    );
   };
 
-  return (
+  return isLoading ? (
+    renderLoader()
+  ) : (
     <SafeAreaView style={styles.container}>
       <View style={styles.SearchBarComponent}>
         <SearchBarComponent />
@@ -78,7 +80,6 @@ const App = () => {
           data={data}
           keyExtractor={item => item.id}
           numColumns={2}
-          ListHeaderComponent={renderLoader}
           renderItem={({item}) => (
             <ListItem
               image={{uri: item.image}}
@@ -142,6 +143,12 @@ const styles = StyleSheet.create({
   },
   SearchBarComponent: {
     marginBottom: 10,
-    marginLeft: 75,
+    marginLeft: 50,
+  },
+  renderLoader: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.gray,
   },
 });

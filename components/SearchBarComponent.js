@@ -7,14 +7,19 @@ import SearchSVG from './SearchSVG';
 //colors imports
 import colors from '../Assets/Colors';
 
-const SearchBarComponent = () => {
+const SearchBarComponent = props => {
+  const {value} = props;
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.searchSVG}>
         <SearchSVG />
       </View>
       <View>
-        <TextInput style={styles.TextInput} />
+        <TextInput
+          placeholder="Type something to start searching"
+          style={styles.TextInput}
+          value={value}
+        />
       </View>
     </View>
   );
@@ -26,15 +31,17 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     flexDirection: 'row',
-    width: 250,
+    width: 300,
     height: 40,
     alignItems: 'center',
     borderRadius: 20,
-    justifyContent: 'center',
   },
   TextInput: {
-    width: 200,
+    width: 250,
     marginLeft: 5,
     height: 40,
+  },
+  searchSVG: {
+    marginLeft: 20,
   },
 });
