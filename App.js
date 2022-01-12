@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  Button,
 } from 'react-native';
 
 import axios from 'axios';
@@ -42,7 +43,7 @@ const App = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${name}&status=Alive&species=&type=&gender=`,
+        `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${name}`,
         //'https://rickandmortyapi.com/api/character/?page=1',
       );
       const Characterdata = response.data;
@@ -54,16 +55,13 @@ const App = () => {
   };
 
   const onChangeText = value => {
+    setName(value);
     setSearchText(value);
     console.log(searchText);
-    newData = data.filter(function (text) {
-      return searchText.includes('rick');
-    });
-    console.log(newData);
-  };
-
-  const onPressRick = () => {
-    setName('Rick');
+    // newData = data.filter(function (text) {
+    //   return searchText.includes('rick');
+    // });
+    // console.log(newData);
   };
 
   useEffect(() => {
@@ -72,7 +70,6 @@ const App = () => {
       setData(rickData.results);
     };
     workAPI();
-    // check if this is making app to overheat and use resources
     const buttonDisable = () => {
       pageNumber == 1 ? setDisabled(true) : setDisabled(false);
     };
@@ -106,9 +103,6 @@ const App = () => {
           </View>
         </View>
       </View>
-      <TouchableOpacity onPress={onPressRick}>
-        <Text>Rick</Text>
-      </TouchableOpacity>
       <View style={styles.flatListWrapper}>
         <FlatList
           data={data}
