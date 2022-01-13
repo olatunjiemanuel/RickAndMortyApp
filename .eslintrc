@@ -1,0 +1,5 @@
+{
+  "extends": "@react-native-community",
+  "plugins": ["prettier"],
+  "parser": "@babel/eslint-parser"
+}

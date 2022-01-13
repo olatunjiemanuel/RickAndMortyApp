@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import {
   FlatList,
@@ -6,9 +7,6 @@ import {
   View,
   ActivityIndicator,
   TextInput,
-  TouchableOpacity,
-  Text,
-  Button,
 } from 'react-native';
 
 import axios from 'axios';
@@ -55,13 +53,17 @@ const App = () => {
   };
 
   const onChangeText = value => {
-    setName(value);
+    //setName(value);
     setSearchText(value);
     console.log(searchText);
     // newData = data.filter(function (text) {
     //   return searchText.includes('rick');
     // });
     // console.log(newData);
+  };
+
+  const onEndEditing = () => {
+    setName(searchText);
   };
 
   useEffect(() => {
@@ -99,6 +101,8 @@ const App = () => {
               style={styles.TextInput}
               value={searchText}
               onChangeText={onChangeText}
+              onEndEditing={onEndEditing}
+              autoCapitalize="none"
             />
           </View>
         </View>
