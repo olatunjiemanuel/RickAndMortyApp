@@ -49,6 +49,7 @@ const App = () => {
       return Characterdata;
     } catch (error) {
       console.error(error.message);
+      //Alert.alert(error.message);
     }
   };
 
