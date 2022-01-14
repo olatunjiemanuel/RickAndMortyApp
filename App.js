@@ -11,6 +11,7 @@ import {
 
 import axios from 'axios';
 import ListItem from './components/ListItem';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //colors imports
 import colors from './Assets/Colors';
@@ -27,6 +28,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [name, setName] = useState('');
+  const [storedData, setStoredData] = useState([]);
 
   const onPressNext = () => {
     pageNumber <= 41 ? setPageNumber(pageNumber + 1) : setPageNumber(1);
@@ -35,6 +37,21 @@ const App = () => {
   const onPressPrev = () => {
     pageNumber > 1 ? setPageNumber(pageNumber - 1) : null;
     console.log(pageNumber);
+  };
+
+  const DataStorage = async () => {
+    const tempData = await fetchAPI();
+    AsyncStorage.setItem('temp', JSON.stringify(tempData.results));
+    //console.log(tempData);
+    return tempData;
+  };
+
+  const getData = () => {
+    AsyncStorage.getItem('temp').then(data => {
+      setStoredData(data);
+      console.log(storedData);
+      return storedData;
+    });
   };
 
   const fetchAPI = async () => {
@@ -73,6 +90,10 @@ const App = () => {
       setData(rickData.results);
     };
     workAPI();
+
+    DataStorage();
+    getData();
+
     const buttonDisable = () => {
       pageNumber == 1 ? setDisabled(true) : setDisabled(false);
     };
