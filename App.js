@@ -41,17 +41,27 @@ const App = () => {
 
   const DataStorage = async () => {
     const tempData = await fetchAPI();
-    AsyncStorage.setItem('temp', JSON.stringify(tempData.results));
+    try {
+      AsyncStorage.setItem('temp', JSON.stringify(tempData.results));
+    } catch (err) {
+      alert(err);
+    }
     //console.log(tempData);
     return tempData;
   };
 
-  const getData = () => {
-    AsyncStorage.getItem('temp').then(data => {
-      setStoredData(data);
-      console.log(storedData);
-      return storedData;
-    });
+  const getData = async () => {
+    try {
+      let temporaryData = await AsyncStorage.getItem('temp');
+      setIsLoading(true);
+      setStoredData(temporaryData);
+    } catch (err) {
+      alert(err);
+    }
+    // .then(data => {
+    //   setStoredData(data);
+    //   console.log(storedData);
+    //   return storedData;
   };
 
   const fetchAPI = async () => {
@@ -85,6 +95,11 @@ const App = () => {
   };
 
   useEffect(() => {
+    getData();
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
     const workAPI = async () => {
       const rickData = await fetchAPI();
       setData(rickData.results);
@@ -92,7 +107,6 @@ const App = () => {
     workAPI();
 
     DataStorage();
-    getData();
 
     const buttonDisable = () => {
       pageNumber == 1 ? setDisabled(true) : setDisabled(false);
